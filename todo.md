@@ -36,3 +36,39 @@
 | res.attachment([filename]), res.download(path, [filename], [callback]) | 两种方法会将响应报头 Content-Disposition 设为 attachment，这样浏览器会选择下载而不是展示内容。可以指定 filename 给浏览器作为对用户的提示。用 res.download 指定要下载的文件，而 res.attachment 只是设置报头。另外，还要将内容发送到客户端。                                                      |
 | res.sendFile(path,[option],[callback])                                 | 根据路径读取指定文件并将内容发送到客户端。                                                                                                                                                                                                                                                      |
 | res.locals,res.render(view,[locals],callback)                          | res.locals 是一个对象，包含用于渲染视图的默认上下文。res.render 使用配置的模板引擎渲染视图（不能把 res.render 的 locals 参数与 res.locals 混为一谈，上下文在 res.locals 中会被重写，但在没有被重写的情况下仍然可用）。res.render 的默认响应代码为 200，使用 res.status 可以指定一个不同的代码。 |
+
+两种最流行的 NoSQL 数据库是文档数据库 MongoDB 和键 - 值数据库 Redis
+
+mongodb 连接
+
+```javascript
+mongoose.connect('mongodb://39.105.150.128/test', {
+  keepAlive: 1,
+  useNewUrlParser: true
+})
+```
+
+mongod --dbpath /var/lib/mongodb/ --logpath /var/log/mongodb/mongodb.log --logappend &
+–dbpath：指定 mongo 的数据库文件在哪个文件夹
+–logpath：指定 mongo 的 log 日志是哪个，这里 log 一定要指定到具体的文件名
+–logappend：表示 log 的写入是采用附加的方式，默认的是覆盖之前的文件
+
+永久启动
+启动：sudo service mongodb start
+关闭：sudo service mongodb stop
+临时启动
+mongod
+进入 mongo 命令行交互
+mongo
+
+查看 27017 端口占用
+lsof -i:27017
+
+mongo 允许远程连接
+
+```shell
+sudo vim /etc/mongodb.conf
+将下面两个属性改为下面的值，有#的去掉#
+bind_ip = 0.0.0.0
+port = 27017
+```
