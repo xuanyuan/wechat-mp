@@ -85,12 +85,13 @@ switch (app.get('env')) {
 		throw new Error('Unknown execution environment: ' + app.get('env'))
 		break
 }
+app.use('/upload', express.static(path.join(__dirname, "/upload")));
 
 routes(app)
 
 app.use(function(err, req, res, next) {
 
-	console.log(' 检测到未处理的错误 : ' + err.message)
+	console.log('检测到未处理的错误 : ' + err.message)
 	res.status(500);
 	res.send('500 - 服务器错误 ')
 })
